@@ -1,0 +1,16 @@
+FROM jboss/keycloak:24.0.3
+
+# Set the working directory
+WORKDIR /opt/keycloak
+
+# Copy the Keycloak source code to the container
+COPY . /opt/keycloak
+
+# Build Keycloak
+RUN mvn clean install -DskipTests
+
+# Expose the Keycloak port
+EXPOSE 8080
+
+# Start Keycloak
+CMD ["/opt/keycloak/bin/standalone.sh"]

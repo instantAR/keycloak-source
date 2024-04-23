@@ -1,15 +1,13 @@
 version: "3"
 services:
-  sbconsole:
+  keycloakserv:
     image: jituhooda/keycloak-source:24
 
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile2
     env_file:
       - ./.env
-    ports:
-      - 5008:8080
     volumes:
       - ./keycloak-data:/app
     networks:
