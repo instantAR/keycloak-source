@@ -16,4 +16,4 @@ RUN ./mvnw clean install -Pdistribution -DskipTests
 
 RUN mv quarkus/server/target/lib/quarkus-run.jar quarkus.jar
 
-ENTRYPOINT ["java","-jar","quarkus.jar", "start"]
+ENTRYPOINT ["java","-jar","quarkus.jar", "start-dev"]
