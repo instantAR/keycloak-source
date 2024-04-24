@@ -1,5 +1,8 @@
 FROM jboss/keycloak:24.0.3
 
+RUN mkdir /opt/keycloak
+RUN mkdir /tmp/keycloak/
+
 # Set the working directory
 WORKDIR /opt/keycloak
 
@@ -30,4 +33,4 @@ RUN chmod -R g+rwX /opt/keycloak
 EXPOSE 8080
 
 # Start Keycloak
-CMD ["/opt/keycloak/bin/standalone.sh"]
+CMD ["/opt/keycloak/bin/kc.sh"]
