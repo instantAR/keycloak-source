@@ -9,6 +9,23 @@ COPY . /opt/keycloak
 # Build Keycloak
 RUN mvn clean install -DskipTests
 
+ENV KEYCLOAK_VERSION 999.0.0-SNAPSHOT
+ARG KEYCLOAK_DIST=quarkus/dist/target/keycloak-$KEYCLOAK_VERSION.tar.gz
+
+RUN dnf install -y tar gzip
+
+ADD $KEYCLOAK_DIST /tmp/keycloak/
+
+# The next step makes it uniform for local development and upstream built.
+# If it is a local tar archive then it is unpacked, if from remote is just downloaded.
+RUN (cd /tmp/keycloak && \
+    tar -xvf /tmp/keycloak/keycloak-*.tar.gz && \
+    rm /tmp/keycloak/keycloak-*.tar.gz) || true
+
+RUN mv /tmp/keycloak/keycloak-* /opt/keycloak && mkdir -p /opt/keycloak/data
+RUN chmod -R g+rwX /opt/keycloak
+
+
 # Expose the Keycloak port
 EXPOSE 8080
 
