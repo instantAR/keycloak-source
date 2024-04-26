@@ -13,7 +13,7 @@ docker network create custom_network
 docker login -u jituhooda -p e0880390-5373-4ed3-bdde-58f7b5998a13
 
 # Set your registry and image names
-REGISTRY="jituhooda/keycloak-source"
+REGISTRY="jituhooda/keycloak-source" 
 
 # Build with cache
 DOCKER_BUILDKIT=0  docker build \
