@@ -1,4 +1,5 @@
-FROM jboss/keycloak:24.0.3
+# FROM jboss/keycloak:24.0.3
+FROM keycloak/keycloak:24.0.3
 
 RUN mkdir /opt/keycloak
 RUN mkdir /tmp/keycloak/
