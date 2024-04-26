@@ -42,5 +42,7 @@ RUN chmod -R g+rwX /opt/keycloak
 # Expose the Keycloak port
 EXPOSE 8080
 
+RUN yum install java-17-openjdk-devel -y
+
 # Start Keycloak
-CMD ["/opt/keycloak/bin/kc.sh", "start-dev"]
+CMD ["/opt/keycloak/keycloak-999.0.0-SNAPSHOT/bin/kc.sh", "start-dev"]
