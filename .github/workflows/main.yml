@@ -5,7 +5,7 @@ name: Run My Shell Script
 on:
   push:
     branches:
-      - dev24
+      - release/24.0
 
 jobs:
   my-job:
