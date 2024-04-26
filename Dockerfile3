@@ -1,0 +1,46 @@
+FROM openjdk:17-jdk-slim as build
+RUN apt update -y && apt install maven -y
+
+# Set up the working directory
+ENV HOME=/usr/app
+RUN mkdir -p $HOME
+WORKDIR $HOME
+
+ADD pom.xml $HOME
+ADD . $HOME
+
+RUN apt-get install telnet -y
+
+
+RUN ./mvnw clean install -Pdistribution -DskipTests
+
+
+# FROM jboss/keycloak:24.0.3
+FROM registry.access.redhat.com/ubi9
+
+# RUN mkdir /opt/keycloak
+# RUN mkdir /tmp/keycloak/
+
+# Set the working directory
+WORKDIR /opt/keycloak
+
+# Copy the Keycloak source code to the container
+COPY --from=build /usr/app/quarkus/dist/target/keycloak-999.0.0-SNAPSHOT.tar.gz /tmp/keycloak/
+
+RUN dnf install -y tar gzip
+
+# The next step makes it uniform for local development and upstream built.
+# If it is a local tar archive then it is unpacked, if from remote is just downloaded.
+RUN (cd /tmp/keycloak && \
+    tar -xvf /tmp/keycloak/keycloak-*.tar.gz && \
+    rm /tmp/keycloak/keycloak-*.tar.gz) || true
+
+RUN mv /tmp/keycloak/keycloak-* /opt/keycloak && mkdir -p /opt/keycloak/data
+RUN chmod -R g+rwX /opt/keycloak
+
+
+# Expose the Keycloak port
+EXPOSE 8080
+
+# Start Keycloak
+CMD ["/opt/keycloak/bin/kc.sh", "start-dev"]

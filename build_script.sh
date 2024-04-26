@@ -19,7 +19,7 @@ REGISTRY="jituhooda/keycloak-source"
 DOCKER_BUILDKIT=0  docker build \
     --network custom_network \
     -t "jituhooda/keycloak-source:24" \
-    -f Dockerfile2 \
+    -f Dockerfile3 \
     .
 #    --cache-to type=registry,ref="$REGISTRY/buildcache,mode=max" \
 #    --cache-from type=registry,ref="$REGISTRY/buildcache" \
