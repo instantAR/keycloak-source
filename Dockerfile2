@@ -17,7 +17,7 @@ ARG KEYCLOAK_DIST=quarkus/dist/target/keycloak-$KEYCLOAK_VERSION.tar.gz
 
 RUN dnf install -y tar gzip
 
-ADD $KEYCLOAK_DIST /tmp/keycloak/
+COPY $KEYCLOAK_DIST /tmp/keycloak/
 
 # The next step makes it uniform for local development and upstream built.
 # If it is a local tar archive then it is unpacked, if from remote is just downloaded.
@@ -33,4 +33,4 @@ RUN chmod -R g+rwX /opt/keycloak
 EXPOSE 8080
 
 # Start Keycloak
-CMD ["/opt/keycloak/bin/kc.sh"]
+CMD ["/opt/keycloak/bin/kc.sh", "start-dev"]
