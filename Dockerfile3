@@ -44,5 +44,8 @@ EXPOSE 8080
 
 RUN yum install java-17-openjdk-devel -y
 
+COPY ./entrypoint.sh /opt/keycloak/entrypoint.sh
+RUN chmod +x /opt/keycloak/entrypoint.sh
+ENTRYPOINT ["/opt/keycloak/entrypoint.sh"]
 # Start Keycloak
-CMD ["/opt/keycloak/keycloak-999.0.0-SNAPSHOT/bin/kc.sh", "start-dev"]
+# CMD ["/opt/keycloak/keycloak-999.0.0-SNAPSHOT/bin/kc.sh", "start-dev","--proxy-headers=xforwarded", "--hostname-strict=false"]
